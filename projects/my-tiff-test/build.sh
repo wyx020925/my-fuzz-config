@@ -28,6 +28,10 @@ make -j$(nproc)
 # 3. 编译 Fuzzer Harness
 # 注意：$LIB_FUZZING_ENGINE 是系统提供的变量，不要自己写 -lFuzzer
 # 注意：链接顺序很重要，依赖库放在后面
+echo "Patching harness to fix naming conflict..."
+sed -i 's/static void TIFFErrorHandler/static void MyTIFFErrorHandler/g' contrib/oss-fuzz/tiff_read_rgba_fuzzer.cc
+sed -i 's/TIFFSetErrorHandler(TIFFErrorHandler)/TIFFSetErrorHandler(MyTIFFErrorHandler)/g' contrib/oss-fuzz/tiff_read_rgba_fuzzer.cc
+sed -i 's/TIFFSetWarningHandler(TIFFErrorHandler)/TIFFSetWarningHandler(MyTIFFErrorHandler)/g' contrib/oss-fuzz/tiff_read_rgba_fuzzer.cc
 $CXX $CXXFLAGS -std=c++11 -I. -Ilibtiff \
     contrib/oss-fuzz/tiff_read_rgba_fuzzer.cc \
     -o $OUT/tiff_read_rgba_fuzzer \
