@@ -1,0 +1,9 @@
+homepage: "https://github.com/wyx020925/test-libtiff-buttercup"
+language: c++
+primary_contact: "test@example.com"
+sanitizers:
+  - address
+  - undefined
+fuzzing_engines:
+  - libfuzzer
+main_repo: "https://github.com/wyx020925/test-libtiff-buttercup"
